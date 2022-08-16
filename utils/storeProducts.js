@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import moment from 'moment';
+import saveFile from '../lib/saveFile';
 import {
   getAllProducts as getAllProdProducts,
   getAllStores as getAllProdStores,
@@ -31,7 +32,7 @@ export const updateStoreProducts = async (base = 'DEV') => {
       "Error: please check the inputted value for the 'base' parameter"
     );
   }
-
+  saveFile('./data/currentProducts.json', currentProducts);
   const missingStores = [];
   const missingProducts = [];
 
@@ -115,9 +116,11 @@ export const updateStoreProducts = async (base = 'DEV') => {
 
   missingStores.sort();
   console.log(`\nStores Missing in Airtable [${base}]:`, missingStores);
-
+  saveFile('./data/missingStores.json', missingStores);
   missingProducts.sort();
   console.log(`\nProducts Missing in Airtable [${base}]:`, missingProducts);
+
+  saveFile('./data/missingProducts.json', missingProducts);
 
   // Update Airtable base
   if (base === 'DEV') {

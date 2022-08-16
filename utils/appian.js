@@ -1,5 +1,8 @@
 import dotenv from 'dotenv-safe';
+import fs from 'fs';
+import { createFile } from 'fs-extra';
 import fetch from 'node-fetch';
+import saveFile from '../lib/saveFile';
 
 // These two objects hold mappings to correct discrepancies between what's in our Airtable as Store / Product 'Name' properties.
 dotenv.config({ allowEmptyValues: true });
@@ -9,12 +12,12 @@ const formatStores = {
 };
 
 const formatProducts = {
-  'Grapes, Red Seedless, Fresh Cut': 'Grapes, Red (6 oz)',
-  'Grapes, Green Seedless, Fresh Cut': 'Grapes, Green (6 oz)',
-  'Grapes, Purple Seedless, Fresh Cut': 'Grapes, Purple (6 oz)',
+  'Grapes, Red Seedless, Fresh Cut': 'Grapes, Red Seedless, Fresh Cut',
+  'Grapes, Green Seedless, Fresh Cut': 'Grapes, Green Seedless, Fresh Cut',
+  'Grapes, Purple Seedless, Fresh Cut': 'Grapes, Purple Seedless, Fresh Cut',
   'tomato, cherry': 'Tomato, Cherry (6 oz)',
   'Cherry Tomato': 'Tomato, Cherry (6 oz)',
-  'Grapes, Mix Seedless, Fresh Cut': 'Grapes, Mix (6 oz)',
+  'Grapes, Mix Seedless, Fresh Cut': 'Grapes, Mix Seedless, Fresh Cut',
   'Collard Greens (bunch)': 'Collard Greens, (bunch)',
   'Garlic, peeled (bag)': 'Garlic, Peeled (bag)',
   'Clementines (bag)': 'Clementines, (bag)',
@@ -66,6 +69,8 @@ export default async function getProducts() {
     throw new Error(`Appian API response status: ${response.status}`);
   }
   const { data } = await response.json();
+  saveFile('./data/storesData.json', data);
+  console.log('appian data: ', data);
   data.forEach((record) => {
     const store = { storeName: null, products: [], lastDeliveryDate: null };
     if (record.storeName in formatStores) {
