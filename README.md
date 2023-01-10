@@ -11,3 +11,8 @@ All documentation lives at <https://healthycorners-rewards.netlify.app> - for ne
 
 - Customer-facing mobile application: [`dccentralkitchen`](https://github.com/calblueprint/dccentralkitchen)
 - Clerk-facing tablet application: [`dccentralkitchen-clerks`](https://github.com/calblueprint/dccentralkitchen-clerks)
+
+## Heroku Scheduler
+
+- App uses Heroku Scheduler , to run scheduled tasks every day to update Airtable products.
+- Heroku App in use : https://dashboard.heroku.com/apps/healthy-corners-dev
