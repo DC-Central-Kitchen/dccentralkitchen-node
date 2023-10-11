@@ -17,3 +17,7 @@ All documentation lives at <https://healthycorners-rewards.netlify.app> - for ne
 - App uses Heroku Scheduler, to run scheduled tasks every day to update Airtable products.
 - Heroku App in use : https://dashboard.heroku.com/apps/healthy-corners-dev
 - Auto-deploy has been setup in Heroku, every push to "main" is automatically deployed in the heroku app.
+
+## Airtable Personal Access Tokens
+- Please ensure that you switch between development (Dev) and production (Prod) personal access tokens in your environment file when working in the respective environments.
+- Additionally, don't forget to delete the "PROD" string in the scheduled-update.js file while testing in the development (Dev) environment.
