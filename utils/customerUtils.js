@@ -32,7 +32,7 @@ async function getFavoriteStoreNames(cust, base) {
         "Error: please check the inputted value for the 'base' parameter"
       );
     }
-
+    // console.log(stores);
     const storeNames = [];
     stores.forEach((store) => {
       // latestDelivery cannot be undefined
@@ -47,6 +47,8 @@ async function getFavoriteStoreNames(cust, base) {
         storeNames.push(store.storeName);
       }
     });
+    // console.log(stores);
+    // console.log(storeNames);
     customer = {
       name: cust.name,
       favoriteStores: storeNames,
@@ -71,6 +73,7 @@ export default async function getCustomers(base) {
     let customerData;
     if (base === 'DEV') {
       customerData = await getAllDevCustomers(formulaStr);
+      // console.log(customerData);
     } else if (base === 'PROD') {
       customerData = await getAllProdCustomers(formulaStr);
     } else {
@@ -79,7 +82,8 @@ export default async function getCustomers(base) {
         base
       );
     }
-    customers = Promise.all(
+    // console.log(customerData);
+    customers = await Promise.all(
       customerData.map(async (customer) => {
         return getFavoriteStoreNames(customer, base);
       })
